@@ -3,6 +3,7 @@ package spotify
 import (
 	"errors"
 	"io"
+	"time"
 
 	"github.com/DisgoOrg/disgolink/lavalink"
 )
@@ -29,13 +30,13 @@ func (p *Plugin) Encode(track lavalink.AudioTrack, w io.Writer) (err error) {
 		return errors.New("track is not a SpotifyAudioTrack")
 	}
 
-	if err = lavalink.WriteNullableString(w, spotifyTrack.AudioTrackInfo.ISRC); err != nil {
+	if err = lavalink.WriteNullableString(w, spotifyTrack.ISRC); err != nil {
 		return
 	}
-	return lavalink.WriteNullableString(w, spotifyTrack.AudioTrackInfo.ArtworkURL)
+	return lavalink.WriteNullableString(w, spotifyTrack.ArtworkURL)
 }
 
-func (p *Plugin) Decode(track string, info lavalink.AudioTrackInfo, r io.Reader) (spotifyTrack lavalink.AudioTrack, err error) {
+func (p *Plugin) Decode(info lavalink.AudioTrackInfo, r io.Reader) (spotifyTrack lavalink.AudioTrack, err error) {
 	var isrc, artworkURL *string
 
 	if isrc, err = lavalink.ReadNullableString(r); err != nil {
@@ -46,35 +47,47 @@ func (p *Plugin) Decode(track string, info lavalink.AudioTrackInfo, r io.Reader)
 	}
 
 	return &AudioTrack{
-		AudioTrack: track,
-		AudioTrackInfo: &AudioTrackInfo{
-			AudioTrackInfo: info,
-			ISRC:           isrc,
-			ArtworkURL:     artworkURL,
-		},
+		AudioTrackInfo: info,
+		ISRC:           isrc,
+		ArtworkURL:     artworkURL,
 	}, nil
 }
 
 var (
-	_ lavalink.AudioTrack     = (*AudioTrack)(nil)
-	_ lavalink.AudioTrackInfo = (*AudioTrackInfo)(nil)
+	_ lavalink.AudioTrack = (*AudioTrack)(nil)
 )
 
 type AudioTrack struct {
-	AudioTrack     string          `json:"track"`
-	AudioTrackInfo *AudioTrackInfo `json:"info"`
-}
-
-func (t *AudioTrack) Track() string {
-	return t.AudioTrack
+	AudioTrackInfo lavalink.AudioTrackInfo `json:"info"`
+	ISRC           *string                 `json:"isrc"`
+	ArtworkURL     *string                 `json:"artwork_url"`
 }
 
 func (t *AudioTrack) Info() lavalink.AudioTrackInfo {
 	return t.AudioTrackInfo
 }
 
-type AudioTrackInfo struct {
-	lavalink.AudioTrackInfo
-	ISRC       *string `json:"isrc"`
-	ArtworkURL *string `json:"artwork_url"`
+func (t *AudioTrack) SetPosition(position time.Duration) {
+	t.AudioTrackInfo.Position = position
+}
+
+func (t *AudioTrack) Clone() lavalink.AudioTrack {
+	info := t.AudioTrackInfo
+	info.Position = 0
+	var (
+		isrc, artworkURL *string
+	)
+	if t.ISRC != nil {
+		isrc = new(string)
+		*isrc = *t.ISRC
+	}
+	if t.ArtworkURL != nil {
+		artworkURL = new(string)
+		*artworkURL = *t.ArtworkURL
+	}
+	return &AudioTrack{
+		AudioTrackInfo: info,
+		ISRC:           isrc,
+		ArtworkURL:     artworkURL,
+	}
 }
