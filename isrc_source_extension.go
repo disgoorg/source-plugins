@@ -1,42 +1,28 @@
-package spotify
+package source_extensions
 
 import (
-	"errors"
 	"io"
 	"time"
 
 	"github.com/DisgoOrg/disgolink/lavalink"
+	"github.com/pkg/errors"
 )
 
-const SearchTypeSpotify lavalink.SearchType = "spsearch"
+type ISRCSourceExtension struct{}
 
-var (
-	_ lavalink.SourceExtension = (*Plugin)(nil)
-)
-
-func New() *Plugin {
-	return &Plugin{}
-}
-
-type Plugin struct{}
-
-func (p *Plugin) SourceName() string {
-	return "spotify"
-}
-
-func (p *Plugin) Encode(track lavalink.AudioTrack, w io.Writer) (err error) {
-	spotifyTrack, ok := track.(*AudioTrack)
+func (p ISRCSourceExtension) Encode(track lavalink.AudioTrack, w io.Writer) (err error) {
+	isrcAudioTrack, ok := track.(*ISRCAudioTrack)
 	if !ok {
 		return errors.New("track is not a SpotifyAudioTrack")
 	}
 
-	if err = lavalink.WriteNullableString(w, spotifyTrack.ISRC); err != nil {
+	if err = lavalink.WriteNullableString(w, isrcAudioTrack.ISRC); err != nil {
 		return
 	}
-	return lavalink.WriteNullableString(w, spotifyTrack.ArtworkURL)
+	return lavalink.WriteNullableString(w, isrcAudioTrack.ArtworkURL)
 }
 
-func (p *Plugin) Decode(info lavalink.AudioTrackInfo, r io.Reader) (spotifyTrack lavalink.AudioTrack, err error) {
+func (p ISRCSourceExtension) Decode(info lavalink.AudioTrackInfo, r io.Reader) (spotifyTrack lavalink.AudioTrack, err error) {
 	var isrc, artworkURL *string
 
 	if isrc, err = lavalink.ReadNullableString(r); err != nil {
@@ -46,7 +32,7 @@ func (p *Plugin) Decode(info lavalink.AudioTrackInfo, r io.Reader) (spotifyTrack
 		return
 	}
 
-	return &AudioTrack{
+	return &ISRCAudioTrack{
 		AudioTrackInfo: info,
 		ISRC:           isrc,
 		ArtworkURL:     artworkURL,
@@ -54,24 +40,24 @@ func (p *Plugin) Decode(info lavalink.AudioTrackInfo, r io.Reader) (spotifyTrack
 }
 
 var (
-	_ lavalink.AudioTrack = (*AudioTrack)(nil)
+	_ lavalink.AudioTrack = (*ISRCAudioTrack)(nil)
 )
 
-type AudioTrack struct {
+type ISRCAudioTrack struct {
 	AudioTrackInfo lavalink.AudioTrackInfo `json:"info"`
 	ISRC           *string                 `json:"isrc"`
 	ArtworkURL     *string                 `json:"artwork_url"`
 }
 
-func (t *AudioTrack) Info() lavalink.AudioTrackInfo {
+func (t *ISRCAudioTrack) Info() lavalink.AudioTrackInfo {
 	return t.AudioTrackInfo
 }
 
-func (t *AudioTrack) SetPosition(position time.Duration) {
+func (t *ISRCAudioTrack) SetPosition(position time.Duration) {
 	t.AudioTrackInfo.Position = position
 }
 
-func (t *AudioTrack) Clone() lavalink.AudioTrack {
+func (t *ISRCAudioTrack) Clone() lavalink.AudioTrack {
 	info := t.AudioTrackInfo
 	info.Position = 0
 	var (
@@ -85,7 +71,7 @@ func (t *AudioTrack) Clone() lavalink.AudioTrack {
 		artworkURL = new(string)
 		*artworkURL = *t.ArtworkURL
 	}
-	return &AudioTrack{
+	return &ISRCAudioTrack{
 		AudioTrackInfo: info,
 		ISRC:           isrc,
 		ArtworkURL:     artworkURL,

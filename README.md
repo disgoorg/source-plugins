@@ -1,20 +1,20 @@
-[![Go Reference](https://pkg.go.dev/badge/github.com/DisgoOrg/spotify-plugin.svg)](https://pkg.go.dev/github.com/DisgoOrg/spotify-plugin)
-[![Go Report](https://goreportcard.com/badge/github.com/DisgoOrg/spotify-plugin)](https://goreportcard.com/report/github.com/DisgoOrg/spotify-plugin)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/DisgoOrg/spotify-plugin)](https://golang.org/doc/devel/release.html)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/DisgoOrg/spotify-plugin/blob/master/LICENSE)
-[![Disgo Version](https://img.shields.io/github/v/tag/DisgoOrg/spotify-plugin?label=release)](https://github.com/DisgoOrg/spotify-plugin/releases/latest)
+[![Go Reference](https://pkg.go.dev/badge/github.com/DisgoOrg/source-extensions-plugin.svg)](https://pkg.go.dev/github.com/DisgoOrg/source-extensions-plugin)
+[![Go Report](https://goreportcard.com/badge/github.com/DisgoOrg/source-extensions-plugin)](https://goreportcard.com/report/github.com/DisgoOrg/source-extensions-plugin)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/DisgoOrg/source-extensions-plugin)](https://golang.org/doc/devel/release.html)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/DisgoOrg/source-extensions-plugin/blob/master/LICENSE)
+[![Disgo Version](https://img.shields.io/github/v/tag/DisgoOrg/source-extensions-plugin?label=release)](https://github.com/DisgoOrg/source-extensions-plugin/releases/latest)
 [![Disgo Discord](https://discord.com/api/guilds/817327181659111454/widget.png)](https://discord.gg/NFmvZYmZMF)
 
-# spotify-plugin
+# source-extensions-plugin
 
-spotify-plugin is a [Lavalink](https://github.com/freyacodes/Lavalink) Client which supports the latest Lavalink 3.4 release
+source-extensions-plugin is a collection of additional source extension for [disgolink](https://github.com/DisgoOrg/disgolink)
 
 ## Getting Started
 
 ### Installing
 
 ```sh
-go get github.com/DisgoOrg/spotify-plugin
+go get github.com/DisgoOrg/source-extensions-plugin
 ```
 
 ## Usage
@@ -22,20 +22,24 @@ go get github.com/DisgoOrg/spotify-plugin
 ```go
 import (
     "github.com/DisgoOrg/disgolink/lavalink"
-    "github.com/DisgoOrg/spotify-plugin"
+    "github.com/DisgoOrg/source-extensions-plugin"
 )
 // create new lavalink and add the spotify plugin
 link := lavalink.New(
     lavalink.WithUserID("user_id_here"),
-    lavalink.WithPlugins(spotify.New()),
+    lavalink.WithPlugins(
+        source_extensions.NewNewSpotifyPlugin(),
+        source_extensions.NewAppleMusicPlugin(),
+	),
+
 )
 
-// when loading track you can type cast the track to a spotify track to access extra data
+// when loading track you can type cast the track to an ISRCAudioTrack to access extra data
 _ = link.BestRestClient().LoadItemHandler("https://open.spotify.com/track/3yk51U329nwdpeIHV0O5ez", lavalink.NewResultHandler(
     func (track lavalink.AudioTrack) {
-        if spotifyTrack, ok := track.(*spotify.AudioTrack); ok {
-            println("ISRC: ", spotifyTrack.AudioTrackInfo.ISRC)
-            println("ArtworkURL: ", spotifyTrack.AudioTrackInfo.ArtworkURL)
+        if isrcTrack, ok := track.(*source_extensions.ISRCAudioTrack); ok {
+            println("ISRC: ", isrcTrack.ISRC)
+            println("ArtworkURL: ", isrcTrack.ArtworkURL)
         }
     },
     func (playlist lavalink.AudioPlaylist) {},
@@ -44,10 +48,6 @@ _ = link.BestRestClient().LoadItemHandler("https://open.spotify.com/track/3yk51U
     func (ex lavalink.FriendlyException) {},
 ))
 ```
-
-## Example
-
-You can find an example under [_example](https://github.com/DisgoOrg/spotify-plugin/tree/master/_example)
 
 ## Troubleshooting
 
@@ -59,4 +59,4 @@ Contributions are welcomed but for bigger changes please first reach out via [Di
 
 ## License
 
-Distributed under the [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/DisgoOrg/spotify-plugin/blob/master/LICENSE). See LICENSE for more information.
+Distributed under the [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/DisgoOrg/source-extensions-plugin/blob/master/LICENSE). See LICENSE for more information.
