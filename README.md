@@ -24,6 +24,7 @@ import (
     "github.com/DisgoOrg/disgolink/lavalink"
     "github.com/DisgoOrg/source-extensions-plugin"
 )
+
 // create new lavalink and add the spotify plugin
 link := lavalink.New(
     lavalink.WithUserID("user_id_here"),
