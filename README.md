@@ -30,8 +30,7 @@ link := lavalink.New(
     lavalink.WithPlugins(
         source_extensions.NewNewSpotifyPlugin(),
         source_extensions.NewAppleMusicPlugin(),
-	),
-
+    ),
 )
 
 // when loading track you can type cast the track to an ISRCAudioTrack to access extra data
