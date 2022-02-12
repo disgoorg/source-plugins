@@ -3,7 +3,7 @@ module github.com/DisgoOrg/source-extensions-plugin
 go 1.17
 
 require (
-	github.com/DisgoOrg/disgolink/lavalink v1.2.2
+	github.com/DisgoOrg/disgolink/lavalink v1.3.0
 	github.com/pkg/errors v0.9.1
 )
 

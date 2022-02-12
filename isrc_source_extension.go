@@ -2,7 +2,6 @@ package source_extensions
 
 import (
 	"io"
-	"time"
 
 	"github.com/DisgoOrg/disgolink/lavalink"
 	"github.com/pkg/errors"
@@ -22,7 +21,7 @@ func (p ISRCSourceExtension) Encode(track lavalink.AudioTrack, w io.Writer) (err
 	return lavalink.WriteNullableString(w, isrcAudioTrack.ArtworkURL)
 }
 
-func (p ISRCSourceExtension) Decode(info lavalink.AudioTrackInfo, r io.Reader) (spotifyTrack lavalink.AudioTrack, err error) {
+func (p ISRCSourceExtension) Decode(info lavalink.AudioTrackInfo, r io.Reader) (isrcTrack lavalink.AudioTrack, err error) {
 	var isrc, artworkURL *string
 
 	if isrc, err = lavalink.ReadNullableString(r); err != nil {
@@ -53,7 +52,7 @@ func (t *ISRCAudioTrack) Info() lavalink.AudioTrackInfo {
 	return t.AudioTrackInfo
 }
 
-func (t *ISRCAudioTrack) SetPosition(position time.Duration) {
+func (t *ISRCAudioTrack) SetPosition(position lavalink.Duration) {
 	t.AudioTrackInfo.Position = position
 }
 
