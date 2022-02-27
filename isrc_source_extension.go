@@ -32,9 +32,11 @@ func (p ISRCSourceExtension) Decode(info lavalink.AudioTrackInfo, r io.Reader) (
 	}
 
 	return &ISRCAudioTrack{
-		AudioTrackInfo: info,
-		ISRC:           isrc,
-		ArtworkURL:     artworkURL,
+		AudioTrack: &lavalink.BasicAudioTrack{
+			AudioTrackInfo: info,
+		},
+		ISRC:       isrc,
+		ArtworkURL: artworkURL,
 	}, nil
 }
 
@@ -43,21 +45,13 @@ var (
 )
 
 type ISRCAudioTrack struct {
-	AudioTrackInfo lavalink.AudioTrackInfo `json:"info"`
-	ISRC           *string                 `json:"isrc"`
-	ArtworkURL     *string                 `json:"artwork_url"`
-}
-
-func (t *ISRCAudioTrack) Info() lavalink.AudioTrackInfo {
-	return t.AudioTrackInfo
-}
-
-func (t *ISRCAudioTrack) SetPosition(position lavalink.Duration) {
-	t.AudioTrackInfo.Position = position
+	lavalink.AudioTrack
+	ISRC       *string `json:"isrc"`
+	ArtworkURL *string `json:"artwork_url"`
 }
 
 func (t *ISRCAudioTrack) Clone() lavalink.AudioTrack {
-	info := t.AudioTrackInfo
+	info := t.Info()
 	info.Position = 0
 	var (
 		isrc, artworkURL *string
@@ -71,8 +65,8 @@ func (t *ISRCAudioTrack) Clone() lavalink.AudioTrack {
 		*artworkURL = *t.ArtworkURL
 	}
 	return &ISRCAudioTrack{
-		AudioTrackInfo: info,
-		ISRC:           isrc,
-		ArtworkURL:     artworkURL,
+		AudioTrack: t.AudioTrack.Clone(),
+		ISRC:       isrc,
+		ArtworkURL: artworkURL,
 	}
 }
