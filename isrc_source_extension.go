@@ -3,7 +3,7 @@ package source_extensions
 import (
 	"io"
 
-	"github.com/DisgoOrg/disgolink/lavalink"
+	"github.com/disgoorg/disgolink/lavalink"
 	"github.com/pkg/errors"
 )
 

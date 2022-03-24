@@ -1,28 +1,28 @@
-[![Go Reference](https://pkg.go.dev/badge/github.com/DisgoOrg/source-extensions-plugin.svg)](https://pkg.go.dev/github.com/DisgoOrg/source-extensions-plugin)
-[![Go Report](https://goreportcard.com/badge/github.com/DisgoOrg/source-extensions-plugin)](https://goreportcard.com/report/github.com/DisgoOrg/source-extensions-plugin)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/DisgoOrg/source-extensions-plugin)](https://golang.org/doc/devel/release.html)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/DisgoOrg/source-extensions-plugin/blob/master/LICENSE)
-[![Disgo Version](https://img.shields.io/github/v/tag/DisgoOrg/source-extensions-plugin?label=release)](https://github.com/DisgoOrg/source-extensions-plugin/releases/latest)
+[![Go Reference](https://pkg.go.dev/badge/github.com/disgoorg/source-extensions-plugin.svg)](https://pkg.go.dev/github.com/disgoorg/source-extensions-plugin)
+[![Go Report](https://goreportcard.com/badge/github.com/disgoorg/source-extensions-plugin)](https://goreportcard.com/report/github.com/disgoorg/source-extensions-plugin)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/disgoorg/source-extensions-plugin)](https://golang.org/doc/devel/release.html)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/disgoorg/source-extensions-plugin/blob/master/LICENSE)
+[![Disgo Version](https://img.shields.io/github/v/tag/disgoorg/source-extensions-plugin?label=release)](https://github.com/disgoorg/source-extensions-plugin/releases/latest)
 [![Disgo Discord](https://discord.com/api/guilds/817327181659111454/widget.png)](https://discord.gg/NFmvZYmZMF)
 
 # source-extensions-plugin
 
-source-extensions-plugin is a collection of additional source extension for [disgolink](https://github.com/DisgoOrg/disgolink)
+source-extensions-plugin is a collection of additional source extension for [disgolink](https://github.com/disgoorg/disgolink)
 
 ## Getting Started
 
 ### Installing
 
 ```sh
-go get github.com/DisgoOrg/source-extensions-plugin
+go get github.com/disgoorg/source-extensions-plugin
 ```
 
 ## Usage
 
 ```go
 import (
-    "github.com/DisgoOrg/disgolink/lavalink"
-    "github.com/DisgoOrg/source-extensions-plugin"
+    "github.com/disgoorg/disgolink/lavalink"
+    "github.com/disgoorg/source-extensions-plugin"
 )
 
 // create new lavalink and add the spotify plugin
@@ -59,4 +59,4 @@ Contributions are welcomed but for bigger changes please first reach out via [Di
 
 ## License
 
-Distributed under the [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/DisgoOrg/source-extensions-plugin/blob/master/LICENSE). See LICENSE for more information.
+Distributed under the [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/disgoorg/source-extensions-plugin/blob/master/LICENSE). See LICENSE for more information.

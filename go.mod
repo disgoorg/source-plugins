@@ -1,14 +1,14 @@
-module github.com/DisgoOrg/source-extensions-plugin
+module github.com/disgoorg/source-extensions-plugin
 
-go 1.17
+go 1.18
 
 require (
-	github.com/DisgoOrg/disgolink/lavalink v1.4.0
+	github.com/disgoorg/disgolink/lavalink v1.5.0
 	github.com/pkg/errors v0.9.1
 )
 
 require (
-	github.com/DisgoOrg/log v1.1.3 // indirect
-	github.com/DisgoOrg/snowflake v1.0.4 // indirect
+	github.com/disgoorg/log v1.2.0 // indirect
+	github.com/disgoorg/snowflake v1.1.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 )

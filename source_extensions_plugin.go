@@ -1,6 +1,6 @@
 package source_extensions
 
-import "github.com/DisgoOrg/disgolink/lavalink"
+import "github.com/disgoorg/disgolink/lavalink"
 
 const (
 	SearchTypeSpotify    lavalink.SearchType = "spsearch"
