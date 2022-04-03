@@ -1,10 +1,10 @@
 package source_extensions
 
 import (
+	"errors"
 	"io"
 
 	"github.com/disgoorg/disgolink/lavalink"
-	"github.com/pkg/errors"
 )
 
 type ISRCSourceExtension struct{}
