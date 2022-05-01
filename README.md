@@ -5,16 +5,16 @@
 [![Disgo Version](https://img.shields.io/github/v/tag/disgoorg/source-extensions-plugin?label=release)](https://github.com/disgoorg/source-extensions-plugin/releases/latest)
 [![Disgo Discord](https://discord.com/api/guilds/817327181659111454/widget.png)](https://discord.gg/NFmvZYmZMF)
 
-# source-extensions-plugin
+# source-plugins 
 
-source-extensions-plugin is a collection of additional source extension for [disgolink](https://github.com/disgoorg/disgolink)
+source-plugins is a collection of additional audio sources for [disgolink](https://github.com/disgoorg/disgolink)
 
 ## Getting Started
 
 ### Installing
 
 ```sh
-go get github.com/disgoorg/source-extensions-plugin
+go get github.com/disgoorg/source-plugins
 ```
 
 ## Usage
@@ -22,24 +22,27 @@ go get github.com/disgoorg/source-extensions-plugin
 ```go
 import (
     "github.com/disgoorg/disgolink/lavalink"
-    "github.com/disgoorg/source-extensions-plugin"
+    "github.com/disgoorg/source-plugins"
 )
 
 // create new lavalink and add the spotify plugin
 link := lavalink.New(
     lavalink.WithUserID("user_id_here"),
     lavalink.WithPlugins(
-        source_extensions.NewNewSpotifyPlugin(),
-        source_extensions.NewAppleMusicPlugin(),
+        source_plugins.NewNewSpotifyPlugin(),
+        source_plugins.NewAppleMusicPlugin(),
     ),
 )
 
 // when loading track you can type cast the track to an ISRCAudioTrack to access extra data
 _ = link.BestRestClient().LoadItemHandler("https://open.spotify.com/track/3yk51U329nwdpeIHV0O5ez", lavalink.NewResultHandler(
     func (track lavalink.AudioTrack) {
-        if isrcTrack, ok := track.(*source_extensions.ISRCAudioTrack); ok {
-            println("ISRC: ", isrcTrack.ISRC)
-            println("ArtworkURL: ", isrcTrack.ArtworkURL)
+        if spotifyTrack, ok := track.(*source_plugins.SpotifyAudioTrack); ok {
+            println("Spotify ISRC: ", spotifyTrack.ISRC)
+            println("Spotify ArtworkURL: ", spotifyTrack.ArtworkURL)
+        } else if appleMusicTrack, ok := track.(*source_plugins.AppleMusicAudioTrack); ok {
+            println("AppleMusic ISRC: ", appleMusicTrack.ISRC)
+            println("AppleMusic ArtworkURL: ", appleMusicTrack.ArtworkURL)
         }
     },
     func (playlist lavalink.AudioPlaylist) {},
