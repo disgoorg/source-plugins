@@ -1,8 +1,8 @@
-module github.com/disgoorg/source-extensions-plugin
+module github.com/disgoorg/source-plugins
 
 go 1.18
 
-require github.com/disgoorg/disgolink/lavalink v1.5.1
+require github.com/disgoorg/disgolink/lavalink v1.6.0
 
 require (
 	github.com/disgoorg/log v1.2.0 // indirect
