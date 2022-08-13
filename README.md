@@ -54,7 +54,7 @@ _ = link.BestRestClient().LoadItemHandler("https://open.spotify.com/track/3yk51U
 
 ## Troubleshooting
 
-For help feel free to open an issues or reach out on [Discord](https://discord.gg/NFmvZYmZMF)
+For help feel free to open an issue or reach out on [Discord](https://discord.gg/NFmvZYmZMF)
 
 ## Contributing
 
