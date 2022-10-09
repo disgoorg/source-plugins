@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	SearchTypeDeezer     lavalink.SearchType = "dsearch"
-	SearchTypeDeezerISRC lavalink.SearchType = "disrc"
+	SearchTypeDeezer     lavalink.SearchType = "dzsearch"
+	SearchTypeDeezerISRC lavalink.SearchType = "dzisrc"
 )
 
 var (
